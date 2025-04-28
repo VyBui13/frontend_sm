@@ -1,48 +1,60 @@
 "use client"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import Button from "@/components/Button";
-import { redirect } from "next/navigation";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUser, faLock } from "@fortawesome/free-solid-svg-icons"
+import Button from "@/components/Button"
+import { useState } from "react"
+import { signIn } from "../signInApiService"
 
 const SignInForm = () => {
+  const [username, setUsername] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
 
-    const handleSignIn = () => {
-        redirect("/");
-    };
+  const handleSignIn = () => {
+    signIn(username, password)
+  }
 
-    return (
-        <>
-            <div className="container w-full flex flex-col justify-center items-center">
-                <div className="input-field w-full mb-2">
-                    <div className="item w-full flex items-stretch my-2">
-                        <div className="item-left w-4 h-4 p-4 flex justify-center items-center rounded-lg border-2 mr-4">
-                            <FontAwesomeIcon icon={faUser} />
-                        </div>
-                        <div className="item-right flex-1">
-                            <input className="outline-none w-full h-full border-b-2" type="text" placeholder="Username or email" />
-                        </div>
-                    </div>
-
-                    <div className="item w-full flex items-stretch my-2">
-                        <div className="item-left w-4 h-4 p-4 flex justify-center items-center rounded-lg border-2 mr-4">
-                            <FontAwesomeIcon icon={faLock} />
-                        </div>
-                        <div className="item-right flex-1">
-                            <input className="outline-none w-full h-full border-b-2" type="text" placeholder="Password" />
-                        </div>
-                    </div>
-
-                </div>
-
-                <div className="button-field w-full flex justify-end items-center">
-                    <Button
-                        label="Sign In"
-                        action={handleSignIn}
-                    />
-                </div>
+  return (
+    <>
+      <div className="container flex w-full flex-col items-center justify-center">
+        <div className="input-field mb-2 w-full">
+          <div className="item my-2 flex w-full items-stretch">
+            <div className="item-left mr-4 flex h-4 w-4 items-center justify-center rounded-lg border-2 p-4">
+              <FontAwesomeIcon icon={faUser} />
             </div>
-        </>
-    )
+            <div className="item-right flex-1">
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="h-full w-full border-b-2 outline-none"
+                type="text"
+                placeholder="Username or email"
+              />
+            </div>
+          </div>
+
+          <div className="item my-2 flex w-full items-stretch">
+            <div className="item-left mr-4 flex h-4 w-4 items-center justify-center rounded-lg border-2 p-4">
+              <FontAwesomeIcon icon={faLock} />
+            </div>
+            <div className="item-right flex-1">
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="h-full w-full border-b-2 outline-none"
+                type="text"
+                placeholder="Password"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="button-field flex w-full items-center justify-end">
+          <Button label="Sign In" action={handleSignIn} />
+        </div>
+      </div>
+    </>
+  )
 }
 
-export default SignInForm;
+export default SignInForm
