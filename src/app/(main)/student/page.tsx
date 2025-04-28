@@ -12,13 +12,18 @@ const studentData = [
 const proportions = [2, 4, 2];
 const numOfRows = 7;
 const heightRow = 50;
-
+interface filterType {
+    title: string;
+    column: string;
+    data: string[];
+}
 const StudentPage = () => {
     return (
         <>
             <DataTable
                 headers={studentHeaders as ("id" | "name" | "age")[]}
                 data={studentData}
+                filter={[]}
                 proportions={proportions}
                 numOfRows={numOfRows}
                 heightRow={heightRow}

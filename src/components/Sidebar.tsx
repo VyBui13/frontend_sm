@@ -26,8 +26,8 @@ const sidebarItem =
     ],
     tool: [
         {
-            title: "Score",
-            url: "/score",
+            title: "Grade",
+            url: "/grade",
             icon: faGraduationCap,
         }
     ],
@@ -68,7 +68,6 @@ const Sidebar = () => {
 
                 <div className="body my-4">
                     <NavDocuments title="Home" items={sidebarItem.home} />
-
                     <NavDocuments title="Management" items={sidebarItem.management} />
                     <NavDocuments title="Tool" items={sidebarItem.tool} />
                     <NavDocuments title="Other" items={sidebarItem.other} />
