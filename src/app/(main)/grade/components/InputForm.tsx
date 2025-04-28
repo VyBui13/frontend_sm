@@ -3,8 +3,10 @@
 import { Course } from "@/types/Course";
 import { Student } from "@/types/Student";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faXmark, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
+import Button from "@/components/Button";
+import NothingDisplay from "@/components/NothingDisplay";
 
 interface InputFormProps {
     student: Student;
@@ -44,13 +46,14 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
     const handleSave = () => {
         const editedList = courseList.filter((course) => !compareScore(course));
         console.log("editedList", editedList);
+        actionClose();
     }
 
     return (
         <>
             <div className="virtual-background">
                 <div className="flex flex-col items-center justify-center bg-white w-3/6 p-8 rounded-lg shadow-lg">
-                    <div className="student-info flex items-center justify-between w-full mb-4">
+                    <div className="student-info flex items-center justify-between w-full mb-6">
                         <div className="left flex items-center gap-4">
                             <div className="left w-7 h-7 rounded-full p-8 bg-black flex justify-center items-center">
                                 <FontAwesomeIcon icon={faUser} className="text-xl text-white" />
@@ -67,8 +70,8 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
                         </div>
                     </div>
 
-                    <div className="list-course w-full">
-                        <div className="header flex items-center justify-between w-full">
+                    <div className="list-course w-full  overflow-y-auto max-h-50 .custom-scrollbar">
+                        {courseList.length !== 0 && <div className="header flex items-center justify-between w-full">
                             <div
                                 style={{
                                     flex: 1,
@@ -109,20 +112,21 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
                                     className="text-base font-bold uppercase"
                                 >Grade</span>
                             </div>
-                        </div>
-                        <div className="body">
+                        </div>}
+                        <div className="body w-full">
+                            {courseList.length === 0 && <NothingDisplay title="No course found!" />}
                             {courseList.map((course, index) => (
                                 <div key={index}
                                     style={
                                         !compareScore(course) ? {
-                                            backgroundColor: "red",
+                                            backgroundColor: "#9c9c9c",
                                             color: "#000",
                                         } : {
                                             backgroundColor: "#fff",
                                             color: "#000",
                                         }
                                     }
-                                    className="item flex items-center justify-between w-full">
+                                    className="item flex items-center justify-between w-full rounded-lg">
                                     <div
                                         style={{
                                             flex: 1,
@@ -186,13 +190,20 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
                             ))}
                         </div>
                     </div>
-                    <div className="button w-full flex items-center justify-end mt-4">
-                        <button
-                            className="cursor-pointer"
-                            onClick={actionClose}>X</button>
-                        <button
-                            className="cursor-pointer"
-                            onClick={handleSave}>A</button>
+                    <div className="button w-full flex items-center justify-end mt-6 gap-4">
+                        <Button
+                            label="Cancel"
+                            icon={faXmark}
+                            type="danger"
+                            action={actionClose}
+                        />
+                        <Button
+                            label="Save"
+                            icon={faCheck}
+                            type="success"
+                            action={handleSave}
+                        />
+
                     </div>
                 </div>
             </div >

@@ -1,12 +1,13 @@
 "use client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/Button";
+import { redirect } from "next/navigation";
 
 const SignInForm = () => {
 
     const handleSignIn = () => {
-        console.log("Signing In...");
+        redirect("/");
     };
 
     return (
@@ -34,7 +35,10 @@ const SignInForm = () => {
                 </div>
 
                 <div className="button-field w-full flex justify-end items-center">
-                    <Button className="cursor-pointer">Sign in</Button>
+                    <Button
+                        label="Sign In"
+                        action={handleSignIn}
+                    />
                 </div>
             </div>
         </>
