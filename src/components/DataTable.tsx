@@ -1,10 +1,10 @@
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faArrowLeft, faArrowRight, faHashtag } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faPen, faArrowLeft, faArrowRight, faHashtag, faFilter, faSort } from "@fortawesome/free-solid-svg-icons";
+import { use, useEffect, useState } from "react";
 import NothingDisplay from "./NothingDisplay";
-import ItemFilter from "./ui/ItemFilter";
+import Dropdown from "./Dropdown";
 
 interface DataTableProps<T = any> {
     headers: (keyof T)[];
@@ -17,14 +17,61 @@ interface DataTableProps<T = any> {
         column: string;
         data: string[];
     }[];
+    sort: (keyof T)[];
     action: (item: T) => void;
 }
 
-const DataTable = <T extends object>({ headers, data, proportions, numOfRows, heightRow, filter, action }: DataTableProps<T>) => {
+const DataTable = <T extends object>({ headers, data, proportions, numOfRows, heightRow, filter, sort, action }: DataTableProps<T>) => {
+    const [filterValues, setFilterValues] = useState<Record<string, string>>({});
+    const [sortConfig, setSortConfig] = useState<{ column: keyof T; order: 'asc' | 'desc' } | null>(null);
+
+    const handleFilterChange = (column: string, value?: string) => {
+        setFilterValues((prev) => {
+            const updated = { ...prev };
+            if (!value) {
+                delete updated[column];
+            } else {
+                updated[column] = value;
+            }
+            return updated;
+        });
+    };
+
+    const toggleSort = (column: keyof T) => {
+        setSortConfig((prev) => {
+            if (prev?.column === column) {
+                return { column, order: prev.order === 'asc' ? 'desc' : 'asc' };
+            } else {
+                return { column, order: 'asc' };
+            }
+        });
+    };
+
+
+
+    const filteredData = data.filter((item) => {
+        return Object.entries(filterValues).every(([column, value]) => {
+            if (!value) return true;
+            return String(item[column as keyof T]) === value;
+        });
+    });
+
+    const sortedData = [...filteredData];
+    if (sortConfig) {
+        sortedData.sort((a, b) => {
+            const aValue = a[sortConfig.column];
+            const bValue = b[sortConfig.column];
+            if (aValue < bValue) return sortConfig.order === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortConfig.order === 'asc' ? 1 : -1;
+            return 0;
+        });
+    }
+
     const [page, setPage] = useState(1);
 
+
     const increasePage = () => {
-        if (page < Math.ceil(data.length / numOfRows)) {
+        if (page < Math.ceil(sortedData.length / numOfRows)) {
             setPage(page + 1);
         }
     };
@@ -35,32 +82,40 @@ const DataTable = <T extends object>({ headers, data, proportions, numOfRows, he
         }
     };
 
-    const [filterValues, setFilterValues] = useState<Record<string, string>>({});
-    const handleFilterChange = (column: string, value: string) => {
-        setFilterValues((prev) => ({
-            ...prev,
-            [column]: value,
-        }));
-    };
-
-    const filteredData = data.filter((item) => {
-        return Object.entries(filterValues).every(([column, value]) => {
-            if (!value) return true;
-            return String(item[column as keyof T]) === value;
-        });
-    });
+    useEffect(() => {
+        setPage(1);
+    }, [filterValues, sortConfig]);
 
     return (
         <div className="main-container w-full">
-            <div className="filter-bar mb-1">
-                <div className="left">
+            <div className="filter-bar mb-2">
+                <div className="left flex items-center gap-2">
                     {filter.map((item, index) => (
-                        <ItemFilter
+                        <Dropdown
                             key={index}
                             title={item.title}
-                            data={item.data}
                             value={filterValues[item.column] || ""}
-                            action={(value) => handleFilterChange(item.column, value)}
+                            dataList={[...item.data]}
+                            actionChoose={(value) => handleFilterChange(item.column, value)}
+                            iconProp={faFilter}
+                            width={150}
+                            type="black"
+                            isDropMenu={true}
+                            itemDisplay={5}
+                        />
+                    ))}
+                    {sort && sort.map((item, index) => (
+                        <Dropdown
+                            key={index}
+                            title={String(item)}
+                            value={sortConfig?.column === item ? sortConfig.order : ""}
+                            dataList={["asc", "desc"]}
+                            actionChoose={() => toggleSort(item)}
+                            iconProp={faSort}
+                            width={150}
+                            type="black"
+                            isDropMenu={true}
+                            itemDisplay={2}
                         />
                     ))}
                 </div>
@@ -69,7 +124,7 @@ const DataTable = <T extends object>({ headers, data, proportions, numOfRows, he
                 </div>
             </div>
 
-            <div className="w-full flex flex-col border rounded-md border-2 border-black overflow-hidden">
+            <div className="w-full flex flex-col border rounded border-2 border-black overflow-hidden">
                 {/* Header */}
                 <div className="flex bg-black text-white">
                     {headers.map((header, index) => (
@@ -99,7 +154,7 @@ const DataTable = <T extends object>({ headers, data, proportions, numOfRows, he
                     }}
                     className="flex flex-col">
                     {data.length === 0 && <NothingDisplay title="No data found!" description="" />}
-                    {filteredData.slice((page - 1) * numOfRows, page * numOfRows).map((item, rowIndex) => (
+                    {sortedData.slice((page - 1) * numOfRows, page * numOfRows).map((item, rowIndex) => (
                         <div
                             style={{
                                 height: `${heightRow}px`,
@@ -141,7 +196,7 @@ const DataTable = <T extends object>({ headers, data, proportions, numOfRows, he
                     </div>
 
                     <div className="right p-2 flex items-center justify-center gap-2">
-                        <span className="text-white">{page} | {Math.ceil(data.length / numOfRows)}</span>
+                        <span className="text-white">{page} | {Math.ceil(sortedData.length / numOfRows)}</span>
 
                         <div className="button flex items-center justify-center gap-1">
 
