@@ -7,6 +7,7 @@ import { faUser, faXmark, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import Button from "@/components/Button";
 import NothingDisplay from "@/components/NothingDisplay";
+import ConfirmPassword from "./ConfirmPassword";
 
 interface InputFormProps {
     student: Student;
@@ -29,12 +30,14 @@ const courseData: Course[] = [
 
 const InputForm = ({ student, actionClose }: InputFormProps) => {
     const [courseList, setCourseList] = useState<Course[]>(courseData);
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [isHidePassword, setIsHidePassword] = useState<boolean>(true);
+
     const initialCourseList = useRef(courseData);
 
     const compareScore = (a: Course) => {
         const item = initialCourseList.current.find(item => item.id === a.id);
         if (!item) {
-            console.log("Làm dell gì undefined đc ")
             return false;
         }
         if (item.grade !== a.grade) {
@@ -44,6 +47,13 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
     }
 
     const handleSave = () => {
+        if (!confirmPassword) {
+            setIsHidePassword(false);
+            return;
+        }
+        console.log("Confirm Password:", confirmPassword);
+
+        setConfirmPassword("");
         const editedList = courseList.filter((course) => !compareScore(course));
         console.log("editedList", editedList);
         actionClose();
@@ -51,6 +61,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
 
     return (
         <>
+            {!isHidePassword && <ConfirmPassword action={(value) => setConfirmPassword(value)} actionClose={() => setIsHidePassword(true)} />}
             <div className="virtual-background">
                 <div className="flex flex-col items-center justify-center bg-white w-3/6 p-8 rounded-lg shadow-lg">
                     <div className="student-info flex items-center justify-between w-full mb-6">

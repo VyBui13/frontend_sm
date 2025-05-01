@@ -1,6 +1,7 @@
 export const signIn = async (username: string, password: string) => {
+  const url = 'http://localhost:8080/staffs/sign-in';
   try {
-    const result = await fetch("http://localhost:8080/staffs/sign-in", {
+    const result = await fetch(url, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -10,7 +11,7 @@ export const signIn = async (username: string, password: string) => {
 
     const data = await result.json()
 
-    console.log(data)
+    return data;
   } catch (e) {
     console.log(e)
   }
