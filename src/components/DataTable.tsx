@@ -139,7 +139,7 @@ const DataTable = <T extends object>({
         <div className="right"></div>
       </div>
 
-      <div className="flex w-full flex-col overflow-hidden rounded border border-2 border-black">
+      <div className="flex w-full flex-col overflow-hidden rounded border-2 border-black">
         {/* Header */}
         <div className="flex bg-black text-white">
           {headers.map((header, index) => (

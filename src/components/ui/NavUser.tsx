@@ -12,7 +12,7 @@ const NavUser = () => {
   return (
     <>
       <div className="flex w-full items-center justify-between p-2">
-        <div className="avatar mr-2 flex h-4 w-4 items-center justify-center rounded-lg bg-gray-200 bg-gray-500 p-4">
+        <div className="avatar mr-2 flex h-4 w-4 items-center justify-center rounded-lg bg-gray-500 p-4">
           <FontAwesomeIcon icon={faUser} className="text-white" />
         </div>
         <div className="detail flex-1">
