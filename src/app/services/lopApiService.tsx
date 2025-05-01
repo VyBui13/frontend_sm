@@ -1,5 +1,5 @@
-export const getStudentByStaffId = async (staffId: string) => {
-  const url = `http://localhost:8080/students?staffId=${staffId}`
+export const getAllLop = async () => {
+  const url = "http://localhost:8080/lops"
   try {
     const result = await fetch(url, {
       headers: {

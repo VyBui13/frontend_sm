@@ -1,20 +1,17 @@
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar"
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-    return (
-        <div className="w-screen h-screen flex">
-            <div className="left-gap w-70 h-full bg-white border-r-2 border-black">
-            </div>
-            <div className="left fixed w-70 h-full bg-white border-r-2 border-black">
-                <Sidebar />
-            </div>
-            <div className="right flex-1 p-4">
-                {children}
-            </div>
-        </div>
-    );
+  return (
+    <div className="flex h-screen w-screen">
+      <div className="left-gap h-full w-70 border-r-2 border-black bg-white"></div>
+      <div className="left fixed h-full w-70 border-r-2 border-black bg-white">
+        <Sidebar />
+      </div>
+      <div className="right flex-1 p-4">{children}</div>
+    </div>
+  )
 }

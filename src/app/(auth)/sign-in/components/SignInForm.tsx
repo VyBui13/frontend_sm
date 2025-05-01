@@ -4,27 +4,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons"
 import Button from "@/components/Button"
 import { useState } from "react"
-import { signIn } from "../../../services/signInApiService"
+import { signIn } from "../../../services/staffApiService"
 import { useStaff } from "@/app/contexts/StaffContext"
 import { useRouter } from "next/navigation"
 
 const SignInForm = () => {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const { setStaff } = useStaff();
-  const router = useRouter();
+  const { setStaff } = useStaff()
+  const router = useRouter()
 
-  const handleSignIn = () => {
-    setStaff({
-      id: "1234567890",
-      fullname: "John Doe",
-      email: "",
-      salary: 0,
-    });
-    router.push("/");
-    return;
+  const handleSignIn = async () => {
+    const response = await signIn(username, password)
+    if (response.status === "success") {
+      setStaff(response.data)
+      router.push("/")
+      return
+    }
 
-    // const response = signIn(username, password);
+    alert(response.message)
   }
 
   return (
