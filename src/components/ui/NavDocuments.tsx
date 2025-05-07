@@ -18,13 +18,13 @@ type NavDocumentProps = {
 
 const NavDocuments = ({ items, title }: NavDocumentProps) => {
     return (
-        <div className="my-4 w-full">
+        <div className="my-2 w-full">
             <div className="title w-full text-black font-bold">
-                <h1 className="text-base font-bold text-black mb-2">{title}</h1>
+                <h1 className="text-base font-bold text-black mb-1">{title}</h1>
             </div>
             <div className="items">
                 {items.map((item, index) => (
-                    <Link key={index} href={item.url} className="w-full flex items-center px-2 my-1 hover:bg-gray-200 cursor-pointer rounded-lg">
+                    <Link key={index} href={item.url} className="w-full flex items-center px-2 py-2 my-1 hover:bg-gray-400 transition duration-300 cursor-pointer rounded-lg">
                         <div className="left flex justify-center items-center mr-2 w-10">
                             <FontAwesomeIcon icon={item.icon} className="text-black" />
                         </div>

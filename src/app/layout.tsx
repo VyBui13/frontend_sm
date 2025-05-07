@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { StaffProvider } from "./contexts/StaffContext";
 
 config.autoAddCss = false;
 
@@ -20,9 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-
       >
-        {children}
+        <StaffProvider>
+          {children}
+        </StaffProvider>
       </body>
     </html>
   );

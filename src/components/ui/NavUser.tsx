@@ -1,29 +1,31 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+"use client"
 
-interface NavUserProps {
-    name: string;
-    email: string;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUser, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons"
+import { useStaff } from "@/app/contexts/StaffContext"
+
+const NavUser = () => {
+  const { staff } = useStaff()
+
+  if (!staff) return <div>...</div>
+
+  return (
+    <>
+      <div className="flex w-full items-center justify-between p-2">
+        <div className="avatar mr-2 flex h-4 w-4 items-center justify-center rounded-lg bg-gray-500 p-4">
+          <FontAwesomeIcon icon={faUser} className="text-white" />
+        </div>
+        <div className="detail flex-1">
+          <h1 className="text-sm font-bold text-black">{staff?.fullname}</h1>
+          <p className="text-sm text-gray-500">{staff?.email}</p>
+        </div>
+
+        <div className="button flex h-4 w-4 cursor-pointer items-center justify-center rounded-lg p-4">
+          <FontAwesomeIcon icon={faEllipsisVertical} className="text-black" />
+        </div>
+      </div>
+    </>
+  )
 }
 
-const NavUser = ({ name, email }: NavUserProps) => {
-    return (
-        <>
-            <div className="w-full flex p-2 justify-between items-center ">
-                <div className="avatar bg-gray-500 w-4 h-4 bg-gray-200 p-4 rounded-lg mr-2 flex justify-center items-center">
-                    <FontAwesomeIcon icon={faUser} className="text-white" />
-                </div>
-                <div className="detail flex-1">
-                    <h1 className="text-sm font-bold text-black">{name}</h1>
-                    <p className="text-sm text-gray-500">{email}</p>
-                </div>
-
-                <div className="button flex justify-center items-center w-4 h-4 p-4 rounded-lg cursor-pointer">
-                    <FontAwesomeIcon icon={faEllipsisVertical} className="text-black" />
-                </div>
-            </div>
-        </>
-    )
-}
-
-export default NavUser;
+export default NavUser

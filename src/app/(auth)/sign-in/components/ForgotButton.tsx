@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import Button from "@/components/Button";
 
 interface ForgotButtonProps {
     label: string;
@@ -9,7 +9,11 @@ interface ForgotButtonProps {
 
 const ForgotButton = ({ label, className }: ForgotButtonProps) => {
     return (
-        <Button variant="link" className="text-white cursor-pointer">{label}</Button>
+        <Button
+            label={label}
+            type="white-link"
+            action={() => alert("Forgot password clicked")}
+        />
     )
 }
 

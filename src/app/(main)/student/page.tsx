@@ -1,31 +1,42 @@
-"use client"
-import DataTable from "@/components/DataTable";
+// "use client"
 
-const studentHeaders = ["id", "name", "age"];
-const studentData = [
-    { id: 1, name: "Nguyen Van A", age: 20 },
-    { id: 2, name: "Tran Thi B", age: 22 },
-    { id: 3, name: "Le Van C", age: 19 },
-    { id: 4, name: "Pham Thi D", age: 21 },
-    { id: 5, name: "Do Van E", age: 23 },
-];
-const proportions = [2, 4, 2];
-const numOfRows = 7;
-const heightRow = 50;
+// import { useStaff } from "@/app/contexts/StaffContext"
+// import { getStudentByStaffId } from "@/app/services/studentApiService"
+// import DataTable from "@/components/DataTable"
+// import { Student } from "@/types/Student"
+// import { useEffect, useState } from "react"
 
-const StudentPage = () => {
-    return (
-        <>
-            <DataTable
-                headers={studentHeaders as ("id" | "name" | "age")[]}
-                data={studentData}
-                proportions={proportions}
-                numOfRows={numOfRows}
-                heightRow={heightRow}
-                action={(item) => console.log(item)}
-            />
-        </>
-    );
-};
+// // const studentHeaders = ["id", "name", "age"]
+// // const studentData = [
+// //   { id: 1, name: "Nguyen Van A", age: 20 },
+// //   { id: 2, name: "Tran Thi B", age: 22 },
+// //   { id: 3, name: "Le Van C", age: 19 },
+// //   { id: 4, name: "Pham Thi D", age: 21 },
+// //   { id: 5, name: "Do Van E", age: 23 },
+// // ]
+// const proportions = [2, 4, 2]
+// const numOfRows = 7
+// const heightRow = 50
+// interface filterType {
+//   title: string
+//   column: string
+//   data: string[]
+// }
+// const StudentPage = () => {
 
-export default StudentPage;
+//   return (
+//     <>
+//       <DataTable
+//         headers={studentHeaders as ("id" | "name" | "age")[]}
+//         data={studentData}
+//         filter={[]}
+//         proportions={proportions}
+//         numOfRows={numOfRows}
+//         heightRow={heightRow}
+//         action={(item) => console.log(item)}
+//       />
+//     </>
+//   )
+// }
+
+// export default StudentPage
