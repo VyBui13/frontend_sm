@@ -1,7 +1,7 @@
 "use client"
 import DataTable from "@/components/DataTable"
 import { Student } from "@/types/Student"
-import { formatDateSting, parseDateToString } from "@/utils/DateProvider"
+import { formatDateSting } from "@/utils/DateProvider"
 import { useEffect, useState } from "react"
 import InputForm from "./components/InputForm"
 import { useStaff } from "@/app/contexts/StaffContext"

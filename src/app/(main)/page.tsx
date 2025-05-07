@@ -5,17 +5,18 @@ import { useEffect } from "react";
 
 const Page = () => {
     const { staff } = useStaff();
-    const router = useRouter();
+    if (!staff) return <></>;
+    // const router = useRouter();
 
-    useEffect(() => {
-        if (!staff) {
-            router.push("/sign-in");
-        }
-    }, [staff, router]);
+    // useEffect(() => {
+    //     if (!staff) {
+    //         router.push("/sign-in");
+    //     }
+    // }, [staff, router]);
 
-    if (!staff) {
-        return null;
-    }
+    // if (!staff) {
+    //     return null;
+    // }
 
     return (
         <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100">

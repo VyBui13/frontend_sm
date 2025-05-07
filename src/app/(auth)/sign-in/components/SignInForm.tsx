@@ -7,22 +7,37 @@ import { useState } from "react"
 import { signIn } from "../../../services/staffApiService"
 import { useStaff } from "@/app/contexts/StaffContext"
 import { useRouter } from "next/navigation"
+import { useAlert } from "@/app/contexts/AlertContext"
 
 const SignInForm = () => {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const { setStaff } = useStaff()
   const router = useRouter()
+  const { showAlert } = useAlert()
 
   const handleSignIn = async () => {
-    const response = await signIn(username, password)
-    if (response.status === "success") {
-      setStaff(response.data)
-      router.push("/")
+    if (username === "" || password === "") {
+      showAlert("error", "Please fill in all fields");
       return
     }
 
-    alert(response.message)
+    try {
+      const response = await signIn(username, password)
+      if (response.status === "success") {
+        setStaff(response.data)
+        showAlert("success", "Sign in successful")
+        router.push("/")
+        return
+      }
+
+      showAlert("error", response.message)
+
+    }
+    catch (error) {
+      console.error("Error signing in:", error)
+      showAlert("error", "Server is down, please try again later")
+    }
   }
 
   return (
@@ -53,7 +68,7 @@ const SignInForm = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-full w-full border-b-2 outline-none"
-                type="text"
+                type="password"
                 placeholder="Password"
               />
             </div>
