@@ -9,7 +9,7 @@ const typeClassMap: Record<string, string> = {
     dark: 'bg-gray-800 text-white hover:bg-gray-900',
     link: 'text-blue-500 underline hover:text-blue-700',
     black: 'bg-black text-white hover:bg-gray-900',
-    default: 'bg-white text-black border hover:bg-gray-100',
+    default: '',
 };
 
 export const typeSelector = (type: string) => {

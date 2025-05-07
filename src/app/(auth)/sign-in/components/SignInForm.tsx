@@ -42,17 +42,17 @@ const SignInForm = () => {
 
   return (
     <>
-      <div className="container flex w-full flex-col items-center justify-center">
+      <div className="flex w-full flex-col items-center justify-center">
         <div className="input-field mb-2 w-full">
           <div className="item my-2 flex w-full items-stretch">
-            <div className="item-left mr-4 flex h-4 w-4 items-center justify-center rounded-lg border-2 p-4">
-              <FontAwesomeIcon icon={faUser} />
+            <div className="item-left mr-4 flex h-4 w-4 items-center justify-center rounded-lg border-[var(--text-in-background-color)] border-2 p-4">
+              <FontAwesomeIcon icon={faUser} className="text-[var(--text-in-background-color)]" />
             </div>
             <div className="item-right flex-1">
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="h-full w-full border-b-2 outline-none"
+                className="h-full w-full border-b-2 border-b-[var(--text-in-background-color)] outline-none"
                 type="text"
                 placeholder="Username or email"
               />
@@ -60,14 +60,14 @@ const SignInForm = () => {
           </div>
 
           <div className="item my-2 flex w-full items-stretch">
-            <div className="item-left mr-4 flex h-4 w-4 items-center justify-center rounded-lg border-2 p-4">
-              <FontAwesomeIcon icon={faLock} />
+            <div className="item-left mr-4 flex h-4 w-4 items-center justify-center rounded-lg border-[var(--text-in-background-color)] border-2 p-4">
+              <FontAwesomeIcon icon={faLock} className="text-[var(--text-in-background-color)]" />
             </div>
             <div className="item-right flex-1">
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-full w-full border-b-2 outline-none"
+                className="h-full w-full border-b-2 border-b-[var(--text-in-background-color)] outline-none"
                 type="password"
                 placeholder="Password"
               />
@@ -76,7 +76,11 @@ const SignInForm = () => {
         </div>
 
         <div className="button-field flex w-full items-center justify-end">
-          <Button label="Sign In" action={handleSignIn} />
+          <Button
+            label="Sign In"
+            action={handleSignIn}
+            className="text-[var(--main-color)] bg-[var(--text-in-background-color)] hover:bg-[var(--main-color)] hover:text-[var(--text-in-background-color)]"
+          />
         </div>
       </div>
     </>

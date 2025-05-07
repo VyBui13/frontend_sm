@@ -126,12 +126,13 @@ body {
 
 
   --border-radius: 10px;
-  --main-color: #80002a;
+  --shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+  --main-color: #391F01;
   --main-scroll-color: #3b3b3b84;
-  --background-color: #fff;
+  --background-color: #F4EBE1;
   --item-color: #f2f2f2;
   --text-color: #000;
-  --text-in-background-color: #fff;
+  --text-in-background-color: #F4EBE1;
 }
 
 .dark {
@@ -175,6 +176,18 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@keyframes wideIn {
+  from {
+    max-width: 0;
+    opacity: 0;
+  }
+
+  to {
+    max-width: 500px;
+    opacity: 1;
   }
 }
 
