@@ -17,7 +17,7 @@ const ForgotButton = ({ label, className }: ForgotButtonProps) => {
     return (
         <Button
             label={label}
-            type="white-link"
+            type="link"
             action={handleForgotPassword}
         />
     )

@@ -30,7 +30,11 @@ const ConfirmPassword = ({ action, actionClose, actionCancel }: ConfirmPasswordP
   return (
     <>
       <div className="virtual-background front-side">
-        <div className="flex items-center justify-center gap-2 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
+        <div
+          style={{
+            animation: "zoomIn 0.3s ease-in-out",
+          }}
+          className="flex items-center justify-center gap-2 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
           <input
             type="password"
             id="confirmPassword"

@@ -22,16 +22,22 @@ const SignInForm = () => {
       return
     }
 
-    const response = await signIn(username, password)
-    if (response.status === "success") {
-      setStaff(response.data)
-      showAlert("success", "Sign in successful")
-      router.push("/")
-      return
+    try {
+      const response = await signIn(username, password)
+      if (response.status === "success") {
+        setStaff(response.data)
+        showAlert("success", "Sign in successful")
+        router.push("/")
+        return
+      }
+
+      showAlert("error", response.message)
+
     }
-
-    showAlert("error", response.message)
-
+    catch (error) {
+      console.error("Error signing in:", error)
+      showAlert("error", "Server is down, please try again later")
+    }
   }
 
   return (
@@ -62,7 +68,7 @@ const SignInForm = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-full w-full border-b-2 outline-none"
-                type="text"
+                type="password"
                 placeholder="Password"
               />
             </div>

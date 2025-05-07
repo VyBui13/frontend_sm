@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, ReactNode, useRef } from "react";
+import { createContext, useContext, useState, ReactNode, useRef, PropsWithChildren } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 interface Alert {
@@ -14,9 +14,12 @@ interface AlertContextType {
     closeAlert: (id: string) => void;
 }
 
+type AlertProviderProps = PropsWithChildren<{}>;
+
 const AlertContext = createContext<AlertContextType | undefined>(undefined);
 
-export const AlertProvider = ({ children }: { children: ReactNode }) => {
+
+export const AlertProvider = ({ children }: AlertProviderProps) => {
     const [alerts, setAlerts] = useState<Alert[]>([]);
 
     const showAlert = (type: Alert["type"], message: string) => {

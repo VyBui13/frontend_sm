@@ -11,6 +11,7 @@ import ConfirmPassword from "./ConfirmPassword"
 import { getGrade, updateGrade } from "@/app/services/gradeApiService"
 import { useStaff } from "@/app/contexts/StaffContext"
 import { useAlert } from "@/app/contexts/AlertContext"
+import { useConfirmPrompt } from "@/app/contexts/ConfirmContext"
 
 interface InputFormProps {
   student: Student
@@ -28,6 +29,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
   const [isHidePassword, setIsHidePassword] = useState<boolean>(false)
 
   const initialCourseList = useRef<Course[]>([])
+  const { showConfirmPrompt } = useConfirmPrompt()
 
   useEffect(() => {
     if (confirmPassword === "") return
@@ -38,6 +40,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
 
       if (status === "success") {
         setCourseList(data)
+        showAlert("success", message)
         initialCourseList.current = data
       } else if (status === "failed" && message === "Unmatched credentials") {
         setConfirmPassword("")
@@ -80,8 +83,24 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
         {} as { [key: string]: number },
       )
 
-    if (Object.keys(obj).length > 0)
-      updateGrade(student.id, staff.id, confirmPassword, obj)
+    if (Object.keys(obj).length > 0) {
+      const fetchData = async () => {
+        try {
+          const response = await updateGrade(student.id, staff.id, confirmPassword, obj)
+          const { status, message } = response
+          if (status === "success") {
+            showAlert("success", message)
+          } else {
+            showAlert("error", message)
+          }
+        } catch (error) {
+          console.error("Error updating grade:", error)
+          showAlert("error", "Server is down, please try again later")
+        }
+      }
+
+      fetchData();
+    }
 
     actionClose()
   }
@@ -95,7 +114,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
           actionCancel={actionClose}
         />
       )}
-      <div className="virtual-background">
+      {isHidePassword && <div className="virtual-background">
         <div className="flex w-3/6 flex-col items-center justify-center rounded-lg bg-white p-8 shadow-lg">
           <div className="student-info mb-6 flex w-full items-center justify-between">
             <div className="left flex items-center gap-4">
@@ -247,11 +266,20 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
               label="Save"
               icon={faCheck}
               type="success"
-              action={handleSave}
+              action={() => {
+                showConfirmPrompt({
+                  title: "Are you sure?",
+                  actionLabel: "Save",
+                  action: async () => {
+                    handleSave()
+                  },
+                })
+              }
+              }
             />
           </div>
         </div>
-      </div>
+      </div>}
     </>
   )
 }

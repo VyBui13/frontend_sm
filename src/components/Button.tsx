@@ -20,7 +20,7 @@ const Button = ({ label, icon, className, type, action }: ButtonProps) => {
         <>
             <button
                 onClick={action}
-                className={`${buttonClass} font-bold p-2 rounded cursor-pointer transtion duration-200 flex justify-center items-center shadow-lg`}>
+                className={`${buttonClass} font-bold py-1 px-2 rounded cursor-pointer transtion duration-200 flex justify-center items-center shadow-lg`}>
                 {icon && <FontAwesomeIcon icon={icon} className="px-2" />}
                 {label}
             </button>
