@@ -12,7 +12,6 @@ const typeClassMap: Record<string, string> = {
     default: 'bg-white text-black border hover:bg-gray-100',
 };
 
-
 export const typeSelector = (type: string) => {
     return typeClassMap[type] || typeClassMap.default;
 }

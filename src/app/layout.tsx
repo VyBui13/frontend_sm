@@ -4,6 +4,9 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { StaffProvider } from "./contexts/StaffContext";
+import Alert from "@/components/Alert";
+import { AlertProvider } from "./contexts/AlertContext";
+import AlertPrompt from "@/components/AlertPrompt";
 
 config.autoAddCss = false;
 
@@ -23,7 +26,10 @@ export default function RootLayout({
       <body
       >
         <StaffProvider>
-          {children}
+          <AlertProvider>
+            <AlertPrompt />
+            {children}
+          </AlertProvider>
         </StaffProvider>
       </body>
     </html>

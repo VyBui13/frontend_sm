@@ -10,6 +10,7 @@ import NothingDisplay from "@/components/NothingDisplay"
 import ConfirmPassword from "./ConfirmPassword"
 import { getGrade, updateGrade } from "@/app/services/gradeApiService"
 import { useStaff } from "@/app/contexts/StaffContext"
+import { useAlert } from "@/app/contexts/AlertContext"
 
 interface InputFormProps {
   student: Student
@@ -18,7 +19,9 @@ interface InputFormProps {
 
 const InputForm = ({ student, actionClose }: InputFormProps) => {
   const { staff } = useStaff()
-  if (!staff) return <div>hihi đồ ngốc</div>
+  const { showAlert } = useAlert()
+
+  if (!staff) return <div></div>
 
   const [courseList, setCourseList] = useState<Course[]>([])
   const [confirmPassword, setConfirmPassword] = useState<string>("")
@@ -39,7 +42,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
       } else if (status === "failed" && message === "Unmatched credentials") {
         setConfirmPassword("")
         setIsHidePassword(false)
-        alert(message)
+        showAlert("error", message)
       }
     }
 
@@ -89,6 +92,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
         <ConfirmPassword
           action={(value) => setConfirmPassword(value)}
           actionClose={() => setIsHidePassword(true)}
+          actionCancel={actionClose}
         />
       )}
       <div className="virtual-background">
@@ -163,13 +167,13 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
                   style={
                     !compareScore(course)
                       ? {
-                          backgroundColor: "#9c9c9c",
-                          color: "#000",
-                        }
+                        backgroundColor: "#9c9c9c",
+                        color: "#000",
+                      }
                       : {
-                          backgroundColor: "#fff",
-                          color: "#000",
-                        }
+                        backgroundColor: "#fff",
+                        color: "#000",
+                      }
                   }
                   className="item flex w-full items-center justify-between rounded-lg"
                 >

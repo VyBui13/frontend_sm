@@ -1,17 +1,28 @@
 "use client"
 
+import { useAlert } from "@/app/contexts/AlertContext"
 import Button from "@/components/Button"
 import { useState } from "react"
 
 interface ConfirmPasswordProps {
   action: (value: string) => void
   actionClose: () => void
+  actionCancel: () => void
 }
 
-const ConfirmPassword = ({ action, actionClose }: ConfirmPasswordProps) => {
+const ConfirmPassword = ({ action, actionClose, actionCancel }: ConfirmPasswordProps) => {
   const [password, setPassword] = useState<string>("")
+  const { showAlert } = useAlert()
+
+  const handleCancel = () => {
+    actionCancel();
+  }
 
   const handleChange = () => {
+    if (password === "") {
+      showAlert("error", "Please fill in all fields")
+      return;
+    }
     action(password)
     actionClose()
   }
@@ -31,6 +42,7 @@ const ConfirmPassword = ({ action, actionClose }: ConfirmPasswordProps) => {
             placeholder="Confirm Password"
             required
           />
+          <Button label="Cancel" type="black" action={handleCancel} />
           <Button label="Confirm" type="black" action={handleChange} />
         </div>
       </div>

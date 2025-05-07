@@ -7,22 +7,31 @@ import { useState } from "react"
 import { signIn } from "../../../services/staffApiService"
 import { useStaff } from "@/app/contexts/StaffContext"
 import { useRouter } from "next/navigation"
+import { useAlert } from "@/app/contexts/AlertContext"
 
 const SignInForm = () => {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const { setStaff } = useStaff()
   const router = useRouter()
+  const { showAlert } = useAlert()
 
   const handleSignIn = async () => {
+    if (username === "" || password === "") {
+      showAlert("error", "Please fill in all fields");
+      return
+    }
+
     const response = await signIn(username, password)
     if (response.status === "success") {
       setStaff(response.data)
+      showAlert("success", "Sign in successful")
       router.push("/")
       return
     }
 
-    alert(response.message)
+    showAlert("error", response.message)
+
   }
 
   return (
