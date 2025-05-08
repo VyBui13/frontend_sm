@@ -3,6 +3,7 @@
 import { useAlert } from "@/app/contexts/AlertContext"
 import Button from "@/components/Button"
 import { useState } from "react"
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons"
 
 interface ConfirmPasswordProps {
   action: (value: string) => void
@@ -34,7 +35,7 @@ const ConfirmPassword = ({ action, actionClose, actionCancel }: ConfirmPasswordP
           style={{
             animation: "zoomIn 0.3s ease-in-out",
           }}
-          className="flex items-center justify-center gap-2 rounded-lg bg-white p-4 shadow-md dark:bg-gray-800">
+          className="flex items-center justify-center gap-2 rounded-lg bg-[var(--text-in-background-color)] p-4 shadow-md dark:bg-gray-800">
           <input
             type="password"
             id="confirmPassword"
@@ -42,12 +43,12 @@ const ConfirmPassword = ({ action, actionClose, actionCancel }: ConfirmPasswordP
             onChange={(e) => {
               setPassword(e.target.value)
             }}
-            className="bg-tranparent w-60 rounded border border-gray-300 p-2.5 text-sm text-black dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+            className="bg-tranparent w-60 rounded border border-gray-300 p-2 text-sm text-black dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
             placeholder="Confirm Password"
             required
           />
-          <Button label="Cancel" type="black" action={handleCancel} />
-          <Button label="Confirm" type="black" action={handleChange} />
+          <Button icon={faX} type="danger" action={handleCancel} />
+          <Button icon={faCheck} type="success" action={handleChange} />
         </div>
       </div>
     </>

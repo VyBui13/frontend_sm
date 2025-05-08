@@ -67,17 +67,21 @@ body {
   z-index: 20;
 }
 
+.custom-scrollbar {
+  transition: all 0.3s ease-in-out;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: var(--main-scroll-color);
   border-radius: 10px;
   border: 2px solid #f1f1f1;
 }
@@ -176,6 +180,50 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@keyframes rolling {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateY {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes rotateX {
+  from {
+    transform: rotateX(0deg);
+  }
+
+  to {
+    transform: rotateX(360deg);
+  }
+}
+
+@keyframes swing {
+  from {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+
+  to {
+    transform: rotate(-5deg);
   }
 }
 

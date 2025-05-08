@@ -10,10 +10,10 @@ export default function RootLayout({
     <AuthGuard>
       <div className="flex h-screen w-screen">
         <div className="left-gap h-full w-70 border-r-2 border-black bg-white"></div>
-        <div className="left fixed h-full w-70 border-r-2 border-black bg-white">
+        <div className="left fixed h-full w-70 border-r-3 border-[var(--main-color)] bg-white">
           <Sidebar />
         </div>
-        <div className="right flex-1 p-4">{children}</div>
+        <div className="right flex-1 p-4 bg-[var(--text-in-background-color)]">{children}</div>
       </div>
     </AuthGuard>
   );

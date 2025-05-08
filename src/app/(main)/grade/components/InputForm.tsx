@@ -115,11 +115,11 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
         />
       )}
       {isHidePassword && <div className="virtual-background">
-        <div className="flex w-3/6 flex-col items-center justify-center rounded-lg bg-white p-8 shadow-lg">
+        <div className="flex w-3/6 flex-col items-center justify-center rounded-lg bg-[var(--text-in-background-color)] p-8 shadow-lg">
           <div className="student-info mb-6 flex w-full items-center justify-between">
             <div className="left flex items-center gap-4">
-              <div className="left flex h-7 w-7 items-center justify-center rounded-full bg-black p-8">
-                <FontAwesomeIcon icon={faUser} className="text-xl text-white" />
+              <div className="left flex h-7 w-7 items-center justify-center rounded-full bg-[var(--main-color)] p-8">
+                <FontAwesomeIcon icon={faUser} className="text-2xl text-[var(--text-in-background-color)]" />
               </div>
               <div className="right flex flex-col items-center justify-center">
                 <h1 className="text-xl font-black uppercase">
@@ -139,7 +139,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
             </div>
           </div>
 
-          <div className="list-course .custom-scrollbar max-h-50 w-full overflow-y-auto">
+          <div className="list-course .custom-scrollbar max-h-50 w-full overflow-y-auto custom-scrollbar">
             {courseList.length !== 0 && (
               <div className="header flex w-full items-center justify-between">
                 <div
@@ -190,7 +190,7 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
                         color: "#000",
                       }
                       : {
-                        backgroundColor: "#fff",
+                        backgroundColor: "var(--text-in-background-color)",
                         color: "#000",
                       }
                   }
@@ -268,8 +268,8 @@ const InputForm = ({ student, actionClose }: InputFormProps) => {
               type="success"
               action={() => {
                 showConfirmPrompt({
-                  title: "Are you sure?",
-                  actionLabel: "Save",
+                  title: student.id,
+                  actionLabel: "Update",
                   action: async () => {
                     handleSave()
                   },

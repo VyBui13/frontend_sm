@@ -92,13 +92,13 @@ const Dropdown = <T extends unknown>({
 
             {isOpen && (
                 <div
-                    className={`${domainClass} absolute z-10 border rounded mt-1 overflow-y-auto shadow-lg`}
+                    className={`${domainClass} absolute z-10 border rounded mt-1 overflow-y-auto custom-scrollbar shadow-[var(--shadow)] ${className}`}
                     style={{ maxHeight, width }}
                 >
                     {dataList.map((item, index) => (
                         <div
                             key={index}
-                            className={`${domainClass} p-2 cursor-pointer hover:bg-blue-100}`}
+                            className={`${domainClass} p-2 cursor-pointer hover:bg-gray-700 uppercase`}
                             onClick={() => {
                                 actionChoose(item);
                                 setIsOpen(false);
