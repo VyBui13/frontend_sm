@@ -132,7 +132,10 @@ body {
   --border-radius: 10px;
   --shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
   --main-color: #391F01;
+  --second-color: #391f019b;
+  --third-color: #391f014a;
   --main-scroll-color: #3b3b3b84;
+  --virtual-background-color: rgba(0, 0, 0, 0.7);
   --background-color: #F4EBE1;
   --item-color: #f2f2f2;
   --text-color: #000;
@@ -180,6 +183,32 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+input:-webkit-autofill {
+  background-color: transparent !important;
+  color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill::selection {
+  color: var(--text-in-background-color) !important;
+}
+
+input:-webkit-autofill:focus {
+  color: var(--text-in-background-color) !important;
+  background-color: var(--text-in-background-color) !important;
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
 

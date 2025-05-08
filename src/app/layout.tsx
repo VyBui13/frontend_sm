@@ -8,6 +8,8 @@ import { AlertProvider } from "./contexts/AlertContext";
 import AlertPrompt from "@/components/AlertPrompt";
 import { ConfirmPromptProvider } from "./contexts/ConfirmContext";
 import ConfirmPrompt from "@/components/ConfirmPrompt";
+import { LoadingProvider } from "./contexts/LoadingContext";
+import NavigationEvents from "@/components/NavigationEvents";
 
 config.autoAddCss = false;
 
@@ -26,15 +28,18 @@ export default function RootLayout({
     <html lang="en">
       <body
       >
-        <ConfirmPromptProvider>
-          <StaffProvider>
-            <AlertProvider>
-              <ConfirmPrompt />
-              <AlertPrompt />
-              {children}
-            </AlertProvider>
-          </StaffProvider>
-        </ConfirmPromptProvider>
+        <LoadingProvider>
+          <ConfirmPromptProvider>
+            <StaffProvider>
+              <AlertProvider>
+                <ConfirmPrompt />
+                <AlertPrompt />
+                <NavigationEvents />
+                {children}
+              </AlertProvider>
+            </StaffProvider>
+          </ConfirmPromptProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

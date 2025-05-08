@@ -52,7 +52,7 @@ const SignInForm = () => {
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="h-full w-full border-b-2 border-b-[var(--text-in-background-color)] outline-none"
+                className="h-full w-full border-b-2 border-b-[var(--text-in-background-color)] outline-none text-[var(--text-in-background-color)]"
                 type="text"
                 placeholder="Username or email"
               />
@@ -67,7 +67,7 @@ const SignInForm = () => {
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-full w-full border-b-2 border-b-[var(--text-in-background-color)] outline-none"
+                className="h-full w-full border-b-2 border-b-[var(--text-in-background-color)] outline-none text-[var(--text-in-background-color)]"
                 type="password"
                 placeholder="Password"
               />
