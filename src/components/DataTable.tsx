@@ -5,13 +5,16 @@ import {
   faPen,
   faArrowLeft,
   faArrowRight,
-  faHashtag,
+  faEye,
   faFilter,
   faSort,
+  faRotateRight,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons"
 import { use, useEffect, useState } from "react"
 import NothingDisplay from "./NothingDisplay"
 import Dropdown from "./Dropdown"
+import Button from "./Button"
 
 interface DataTableProps<T = any> {
   headers: (keyof T)[]
@@ -35,7 +38,6 @@ const DataTable = <T extends object>({
   numOfRows,
   heightRow,
   filter,
-  sort,
   action,
 }: DataTableProps<T>) => {
   const [filterValues, setFilterValues] = useState<Record<string, string>>({})
@@ -58,6 +60,9 @@ const DataTable = <T extends object>({
 
   const toggleSort = (column: keyof T) => {
     setSortConfig((prev) => {
+      if (column === undefined) {
+        return null;
+      }
       if (prev?.column === column) {
         return { column, order: prev.order === "asc" ? "desc" : "asc" }
       } else {
@@ -104,8 +109,13 @@ const DataTable = <T extends object>({
 
   return (
     <div className="main-container w-full">
-      <div className="filter-bar mb-2">
+      <div className="filter-bar mb-2 flex items-center justify-between">
         <div className="left flex items-center gap-2">
+          <Button
+            icon={faRotateRight}
+            className="bg-[var(--main-color)] text-[var(--text-in-background-color)]"
+            action={() => setFilterValues({})}
+          />
           {filter?.map((item, index) => (
             <Dropdown
               key={index}
@@ -114,34 +124,32 @@ const DataTable = <T extends object>({
               dataList={[...item.data]}
               actionChoose={(value) => handleFilterChange(item.column, value)}
               iconProp={faFilter}
+              className="bg-[var(--main-color)] text-[var(--text-in-background-color)]"
               width={150}
-              type="black"
               isDropMenu={true}
               itemDisplay={5}
             />
           ))}
-          {sort &&
-            sort.map((item, index) => (
-              <Dropdown
-                key={index}
-                title={String(item)}
-                value={sortConfig?.column === item ? sortConfig.order : ""}
-                dataList={["asc", "desc"]}
-                actionChoose={() => toggleSort(item)}
-                iconProp={faSort}
-                width={150}
-                type="black"
-                isDropMenu={true}
-                itemDisplay={2}
-              />
-            ))}
         </div>
-        <div className="right"></div>
+        <div className="right flex items-center gap-2">
+          <div className="search flex items-center gap-2">
+            <input
+              className="border-b-2 border-[var(--main-color)] outline-none p-1 text-sm text-[var(--text-color)]"
+              type="text"
+              placeholder="Search..."
+            />
+            <Button
+              icon={faMagnifyingGlass}
+              className="bg-[var(--main-color)] text-[var(--text-in-background-color)]"
+              action={() => { }} // Implement search functionality here
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="flex w-full flex-col overflow-hidden rounded border-2 border-black">
+      <div className="flex w-full flex-col overflow-hidden rounded border-3 border-[var(--main-color)]">
         {/* Header */}
-        <div className="flex bg-black text-white">
+        <div className="flex bg-[var(--main-color)] text-[var(--text-in-background-color)]">
           {headers.map((header, index) => (
             <div
               key={index}
@@ -150,7 +158,12 @@ const DataTable = <T extends object>({
               }}
               className={`flex items-center justify-center p-2 font-bold`}
             >
-              {header.toString().toUpperCase()}
+              <Button
+                label={header.toString().toUpperCase()}
+                className="bg-[var(--main-color)] text-[var(--text-in-background-color)] hover:bg-[var(--text-in-background-color)] hover:text-[var(--main-color)]"
+                icon={faSort}
+                action={() => toggleSort(header)}
+              />
             </div>
           ))}
           <div
@@ -200,51 +213,43 @@ const DataTable = <T extends object>({
                   }}
                   className="flex items-center justify-center p-2"
                 >
-                  <button
-                    onClick={() => action(item)}
-                    className="flex h-4 w-4 cursor-pointer items-center justify-center rounded-lg bg-black p-4 text-blue-500 transition duration-200 hover:bg-white"
-                  >
-                    <FontAwesomeIcon
-                      icon={faPen}
-                      className="text-xs text-white hover:text-black"
-                    />
-                  </button>
+
+                  <Button
+                    type="warning"
+                    icon={faPen}
+                    action={() => action(item)}
+                  />
                 </div>
               </div>
             ))}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between gap-4 bg-black text-white">
-          <div className="left flex items-center justify-center gap-2 p-2">
-            <FontAwesomeIcon icon={faHashtag} className="text-white" />
-            <span>{data.length} item(s)</span>
+        <div className="flex items-center justify-between gap-4 bg-[var(--main-color)] text-[var(--text-in-background-color)] px-4 py-2">
+          <div className="left flex items-center justify-center gap-2 ">
+            <FontAwesomeIcon icon={faEye} className="text-[var(--text-in-background-color)]" />
+            <span
+              className="text-[var(--text-in-background-color)] font-bold"
+            >{data.length} item(s)</span>
           </div>
 
-          <div className="right flex items-center justify-center gap-2 p-2">
-            <span className="text-white">
+          <div className="right flex items-center justify-center gap-4 ">
+            <span className="text-[var(--text-in-background-color)] font-bold">
               {page} | {Math.ceil(sortedData.length / numOfRows)}
             </span>
 
             <div className="button flex items-center justify-center gap-1">
-              <button
-                onClick={decreasePage}
-                className="flex h-4 w-4 cursor-pointer items-center justify-center rounded-lg bg-black p-4 text-blue-500 transition duration-200 hover:bg-white hover:text-black"
-              >
-                <FontAwesomeIcon
-                  icon={faArrowLeft}
-                  className="text-xs text-white hover:text-black"
-                />
-              </button>
-              <button
-                onClick={increasePage}
-                className="flex h-4 w-4 cursor-pointer items-center justify-center rounded-lg bg-black p-4 text-blue-500 transition duration-200 hover:bg-white hover:text-black"
-              >
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  className="text-xs text-white hover:text-black"
-                />
-              </button>
+              <Button
+                className="bg-[var(--text-in-background-color)] text-[var(--main-color)]"
+                icon={faArrowLeft}
+                action={decreasePage}
+              />
+
+              <Button
+                className="bg-[var(--text-in-background-color)] text-[var(--main-color)]"
+                icon={faArrowRight}
+                action={increasePage}
+              />
             </div>
           </div>
         </div>

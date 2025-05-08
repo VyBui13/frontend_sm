@@ -67,17 +67,21 @@ body {
   z-index: 20;
 }
 
+.custom-scrollbar {
+  transition: all 0.3s ease-in-out;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: var(--main-scroll-color);
   border-radius: 10px;
   border: 2px solid #f1f1f1;
 }
@@ -126,12 +130,16 @@ body {
 
 
   --border-radius: 10px;
-  --main-color: #80002a;
+  --shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+  --main-color: #391F01;
+  --second-color: #391f019b;
+  --third-color: #391f014a;
   --main-scroll-color: #3b3b3b84;
-  --background-color: #fff;
+  --virtual-background-color: rgba(0, 0, 0, 0.7);
+  --background-color: #F4EBE1;
   --item-color: #f2f2f2;
   --text-color: #000;
-  --text-in-background-color: #fff;
+  --text-in-background-color: #F4EBE1;
 }
 
 .dark {
@@ -175,6 +183,88 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+input:-webkit-autofill {
+  background-color: transparent !important;
+  color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill::selection {
+  color: var(--text-in-background-color) !important;
+}
+
+input:-webkit-autofill:focus {
+  color: var(--text-in-background-color) !important;
+  background-color: var(--text-in-background-color) !important;
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rolling {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateY {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes rotateX {
+  from {
+    transform: rotateX(0deg);
+  }
+
+  to {
+    transform: rotateX(360deg);
+  }
+}
+
+@keyframes swing {
+  from {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+
+  to {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes wideIn {
+  from {
+    max-width: 0;
+    opacity: 0;
+  }
+
+  to {
+    max-width: 500px;
+    opacity: 1;
   }
 }
 

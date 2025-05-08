@@ -19,7 +19,7 @@ const Page = () => {
     // }
 
     return (
-        <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100">
+        <div className="flex flex-col items-center justify-center w-full h-full">
             <h1 className="text-4xl font-bold mb-4">Welcome, {staff.id}</h1>
             <p className="text-lg">You are logged in as {staff.fullname}</p>
         </div>

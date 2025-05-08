@@ -13,6 +13,7 @@ const AlertPrompt = () => {
                     top: '10px',
                     left: '50%',
                     transform: 'translateX(-50%)',
+                    zIndex: 200,
                 }}
                 className="flex flex-col gap-2 z-50">
 
