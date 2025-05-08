@@ -33,8 +33,8 @@ const AuthenticationDisplay = ({ isAuthenticated, seconds }: AuthenticationDispl
         <>
             <div
                 style={{
-                    position: "absolute",
-                    top: "-5px",
+                    position: "fixed",
+                    top: "15px",
                     left: "50%",
                     transform: "translateX(-50%)",
                     zIndex: 30,

@@ -10,6 +10,7 @@ import { ConfirmPromptProvider } from "./contexts/ConfirmContext";
 import ConfirmPrompt from "@/components/ConfirmPrompt";
 import { LoadingProvider } from "./contexts/LoadingContext";
 import NavigationEvents from "@/components/NavigationEvents";
+import { SidebarProvider } from "./contexts/SidebarContext";
 
 config.autoAddCss = false;
 
@@ -32,10 +33,12 @@ export default function RootLayout({
           <ConfirmPromptProvider>
             <StaffProvider>
               <AlertProvider>
-                <ConfirmPrompt />
-                <AlertPrompt />
-                <NavigationEvents />
-                {children}
+                <SidebarProvider>
+                  <ConfirmPrompt />
+                  <AlertPrompt />
+                  <NavigationEvents />
+                  {children}
+                </SidebarProvider>
               </AlertProvider>
             </StaffProvider>
           </ConfirmPromptProvider>
