@@ -123,13 +123,13 @@ const GradingPage = () => {
           }
         />
       )}
-      <div className="div relative w-full">
 
-        <AuthenticationDisplay
-          isAuthenticated={token ? true : false}
-          seconds={token ? 60 : 0}
-        />
-      </div>
+
+      <AuthenticationDisplay
+        isAuthenticated={token ? true : false}
+        seconds={token ? 60 : 0}
+      />
+
       <DataTable
         headers={
           studentHeaders as (

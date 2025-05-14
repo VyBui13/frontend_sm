@@ -95,6 +95,7 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
           const { status, message } = response
           if (status === "success") {
             showAlert("success", message)
+            actionClose()
           } else {
             showAlert("error", message)
           }
@@ -282,7 +283,8 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
                           setCourseList(newCourseList)
                         }}
                         className="w-full text-center text-base font-semibold outline-none"
-                        type="text"
+                        type="number"
+                        step={0.1}
                       />
                     </div>
                   </div>
