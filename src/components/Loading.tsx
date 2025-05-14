@@ -20,8 +20,6 @@ const Loading = () => {
                             borderBottomColor: 'var(--main-color)',
                             borderLeftColor: 'var(--main-scroll-color)',
                             animation: 'spin 1s linear infinite',
-                            // borderRightColor: 'var(--second-color)',
-                            // borderBottomColor: 'var(--third-color)',
                         }}
                         className="absolute top-0 left-0 w-full h-full rounded-full bg-transparent"></div>
                     <div className="content text-[var(--main-color) font-bold]">Loading</div>

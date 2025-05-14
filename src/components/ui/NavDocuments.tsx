@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import Link from "next/link";
+import { useSidebar } from "@/app/contexts/SidebarContext";
 
 type NavDocumentItem = {
     title: string;
@@ -16,6 +17,8 @@ type NavDocumentProps = {
 }
 
 const NavDocuments = ({ items, title }: NavDocumentProps) => {
+    const { toggleSidebar } = useSidebar()
+
     return (
         <div className="my-2 w-full">
             <div className="title w-full text-gray-600 font-bold">
@@ -23,7 +26,9 @@ const NavDocuments = ({ items, title }: NavDocumentProps) => {
             </div>
             <div className="items">
                 {items.map((item, index) => (
-                    <Link key={index} href={item.url} className="w-full flex items-center text-[var(--text-color)] px-3 py-2 my-1 hover:bg-[var(--main-color)] hover:text-[var(--text-in-background-color)] transition duration-200 group cursor-pointer rounded-lg">
+                    <Link
+                        onClick={toggleSidebar}
+                        key={index} href={item.url} className="w-full flex items-center text-[var(--text-color)] px-3 py-2 my-1 hover:bg-[var(--main-color)] hover:text-[var(--text-in-background-color)] transition duration-200 group cursor-pointer rounded-lg">
                         <div className="left flex justify-center items-center mr-2 w-4 group-hover:[transform:rotateY(360deg)] transition duration-300">
                             <FontAwesomeIcon icon={item.icon} />
                         </div>
