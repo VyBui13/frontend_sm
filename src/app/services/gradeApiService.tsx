@@ -1,5 +1,9 @@
-export const getGrade = async (studentId: string, password: string) => {
-  const url = `http://localhost:8080/courses?studentId=${studentId}&password=${password}`
+export const getGrade = async (
+  studentId: string,
+  staffId: string,
+  password: string,
+) => {
+  const url = `http://localhost:8080/courses?studentId=${studentId}&staffId=${staffId}&password=${password}`
   try {
     const result = await fetch(url, {
       headers: {

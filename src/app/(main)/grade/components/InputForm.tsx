@@ -3,7 +3,12 @@
 import { Course } from "@/types/Course"
 import { Student } from "@/types/Student"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser, faXmark, faCheck, faPen } from "@fortawesome/free-solid-svg-icons"
+import {
+  faUser,
+  faXmark,
+  faCheck,
+  faPen,
+} from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useRef, useState } from "react"
 import Button from "@/components/Button"
 import NothingDisplay from "@/components/NothingDisplay"
@@ -19,10 +24,14 @@ interface InputFormProps {
   password: string
   actionClose: () => void
   actionUpdateStudent: (student: Student) => void
-
 }
 
-const InputForm = ({ student, actionClose, password, actionUpdateStudent }: InputFormProps) => {
+const InputForm = ({
+  student,
+  actionClose,
+  password,
+  actionUpdateStudent,
+}: InputFormProps) => {
   const { staff } = useStaff()
   const { showAlert } = useAlert()
 
@@ -46,7 +55,7 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getGrade(student.id, password)
+      const response = await getGrade(student.id, staff.id, password)
       const { status, message, data } = response
 
       if (status === "success") {
@@ -91,7 +100,12 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
     if (Object.keys(obj).length > 0) {
       const fetchData = async () => {
         try {
-          const response = await updateGrade(student.id, staff.id, password, obj)
+          const response = await updateGrade(
+            student.id,
+            staff.id,
+            password,
+            obj,
+          )
           const { status, message } = response
           if (status === "success") {
             showAlert("success", message)
@@ -105,9 +119,8 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
         }
       }
 
-      fetchData();
+      fetchData()
     }
-
   }
 
   const handleUpdateStudent = () => {
@@ -117,7 +130,12 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
 
     const fetchData = async () => {
       try {
-        const response = await updateStudentById(student.id, staff.id, password, selectedStudent)
+        const response = await updateStudentById(
+          student.id,
+          staff.id,
+          password,
+          selectedStudent,
+        )
         const { status, message } = response
         if (status === "success") {
           actionUpdateStudent(selectedStudent)
@@ -126,26 +144,27 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
         } else {
           showAlert("error", message)
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.error("Error updating student:", error)
         showAlert("error", "Server is down, please try again later")
       }
     }
 
     fetchData()
-
   }
 
   return (
     <>
       <div className="virtual-background">
-        <div className="flex items-stretch justify-center rounded-lg bg-[var(--background-color)] shadow-[var(--shadow)] overflow-hidden">
+        <div className="flex items-stretch justify-center overflow-hidden rounded-lg bg-[var(--background-color)] shadow-[var(--shadow)]">
           <div className="left flex flex-col p-8">
             <div className="student-info mb-6 flex w-full items-center justify-between">
               <div className="left flex items-center gap-4">
                 <div className="left flex h-7 w-7 items-center justify-center rounded-full bg-[var(--main-color)] p-8">
-                  <FontAwesomeIcon icon={faUser} className="text-2xl text-[var(--text-in-background-color)]" />
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    className="text-2xl text-[var(--text-in-background-color)]"
+                  />
                 </div>
                 <div className="right flex flex-col items-center justify-center">
                   <h1 className="text-xl font-black uppercase">
@@ -157,24 +176,27 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
                 </div>
               </div>
               <div className="right flex items-center justify-center">
-                {!isUpdated ? <Button
-                  icon={faPen}
-                  type="success"
-                  action={() => {
-                    setIsUpdated((prev) => !prev)
-                  }}
-                /> :
+                {!isUpdated ? (
+                  <Button
+                    icon={faPen}
+                    type="success"
+                    action={() => {
+                      setIsUpdated((prev) => !prev)
+                    }}
+                  />
+                ) : (
                   <Button
                     icon={faXmark}
                     type="danger"
                     action={() => {
                       setIsUpdated((prev) => !prev)
                     }}
-                  />}
+                  />
+                )}
               </div>
             </div>
 
-            <div className="list-course .custom-scrollbar max-h-50 w-full overflow-y-auto custom-scrollbar flex flex-col  flex-1">
+            <div className="list-course .custom-scrollbar custom-scrollbar flex max-h-50 w-full flex-1 flex-col overflow-y-auto">
               {courseList.length !== 0 && (
                 <div className="header flex w-full items-center justify-between">
                   <div
@@ -199,7 +221,9 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
                     }}
                     className="flex items-center justify-center p-2"
                   >
-                    <span className="text-base font-bold uppercase">Credits</span>
+                    <span className="text-base font-bold uppercase">
+                      Credits
+                    </span>
                   </div>
                   <div
                     style={{
@@ -211,7 +235,7 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
                   </div>
                 </div>
               )}
-              <div className="body w-full h-full">
+              <div className="body h-full w-full">
                 {courseList.length === 0 && (
                   <NothingDisplay title="No course found!" />
                 )}
@@ -221,13 +245,13 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
                     style={
                       !compareScore(course)
                         ? {
-                          backgroundColor: "#9c9c9c",
-                          color: "#000",
-                        }
+                            backgroundColor: "#9c9c9c",
+                            color: "#000",
+                          }
                         : {
-                          backgroundColor: "var(--text-in-background-color)",
-                          color: "#000",
-                        }
+                            backgroundColor: "var(--text-in-background-color)",
+                            color: "#000",
+                          }
                     }
                     className="item flex w-full items-center justify-between rounded-lg"
                   >
@@ -310,8 +334,7 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
                       handleSave()
                     },
                   })
-                }
-                }
+                }}
               />
             </div>
           </div>
@@ -322,57 +345,63 @@ const InputForm = ({ student, actionClose, password, actionUpdateStudent }: Inpu
               opacity: !isUpdated ? "0" : "1",
               transition: "width 0.3s ease-in-out, opacity 0.3s ease-in-out",
             }}
-            className="right overflow-hidden">
-            <div className="form w-full bg-[var(--main-color)] p-8 h-full flex flex-col items-center justify-center">
-              <div className="header w-full flex items-center justify-center">
-                <h1
-                  className="text-2xl uppercase text-center font-bold text-[var(--text-in-background-color)]"
-                >Student Detail</h1>
+            className="right overflow-hidden"
+          >
+            <div className="form flex h-full w-full flex-col items-center justify-center bg-[var(--main-color)] p-8">
+              <div className="header flex w-full items-center justify-center">
+                <h1 className="text-center text-2xl font-bold text-[var(--text-in-background-color)] uppercase">
+                  Student Detail
+                </h1>
               </div>
               <div className="body w-full flex-1">
                 <div className="item my-2">
-                  <p
-                    className="mb-1 text-base font-semibold text-[var(--text-in-background-color)]"
-                  >Fullname</p>
+                  <p className="mb-1 text-base font-semibold text-[var(--text-in-background-color)]">
+                    Fullname
+                  </p>
                   <input
                     value={selectedStudent.fullname}
-                    className="w-full rounded-lg bg-[var(--background-color)] p-2 text-base font-semibold outline-none text-[var(--text-color)]"
-                    onChange={(e) => setSelectedStudent({
-                      ...selectedStudent,
-                      fullname: e.target.value,
-                    })}
+                    className="w-full rounded-lg bg-[var(--background-color)] p-2 text-base font-semibold text-[var(--text-color)] outline-none"
+                    onChange={(e) =>
+                      setSelectedStudent({
+                        ...selectedStudent,
+                        fullname: e.target.value,
+                      })
+                    }
                     type="text"
                   />
                 </div>
                 <div className="item my-2">
-                  <p
-                    className="mb-1 text-base font-semibold text-[var(--text-in-background-color)]"
-                  >Date</p>
+                  <p className="mb-1 text-base font-semibold text-[var(--text-in-background-color)]">
+                    Date
+                  </p>
                   <input
                     value={selectedStudent.dob}
-                    className="w-full rounded-lg bg-[var(--background-color)] p-2 text-base font-semibold outline-none text-[var(--text-color)]"
-                    onChange={(e) => setSelectedStudent({
-                      ...selectedStudent,
-                      dob: e.target.value,
-                    })}
+                    className="w-full rounded-lg bg-[var(--background-color)] p-2 text-base font-semibold text-[var(--text-color)] outline-none"
+                    onChange={(e) =>
+                      setSelectedStudent({
+                        ...selectedStudent,
+                        dob: e.target.value,
+                      })
+                    }
                     type="date"
                   />
                 </div>
                 <div className="item my-2">
-                  <p
-                    className="mb-1 text-base font-semibold text-[var(--text-in-background-color)]"
-                  >Address</p>
+                  <p className="mb-1 text-base font-semibold text-[var(--text-in-background-color)]">
+                    Address
+                  </p>
                   <input
                     value={selectedStudent.address}
-                    className="w-full rounded-lg bg-[var(--background-color)] p-2 text-base font-semibold outline-none text-[var(--text-color)]"
-                    onChange={(e) => setSelectedStudent({
-                      ...selectedStudent,
-                      address: e.target.value,
-                    })}
+                    className="w-full rounded-lg bg-[var(--background-color)] p-2 text-base font-semibold text-[var(--text-color)] outline-none"
+                    onChange={(e) =>
+                      setSelectedStudent({
+                        ...selectedStudent,
+                        address: e.target.value,
+                      })
+                    }
                     type="text"
                   />
                 </div>
-
               </div>
               <div className="footer flex w-full items-center justify-end gap-2">
                 <Button
